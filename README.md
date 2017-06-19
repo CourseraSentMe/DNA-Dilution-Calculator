@@ -1,37 +1,100 @@
-## Welcome to GitHub Pages
+---
+title       : DNA Dilution Calculator Slides
+subtitle    : A calculator for DNA dilutions 
+author      : Frank J. Ambrosio
+job         : Author
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
 
-You can use the [editor on GitHub](https://github.com/CourseraSentMe/DNA-Dilution-Calculatory/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## Slide 1
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+My web app is called the DNA Dilution Calculator
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```{r}
+c1 = 10
+v1 = 10
+c2 = 5
+v2 = (c1 * v1)/c2
+v2
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+--- .class #id 
 
-### Jekyll Themes
+## Slide 2
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/CourseraSentMe/DNA-Dilution-Calculatory/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
+Here is the ui.R code for the front end of my app!
+```{r eval=FALSE}
+sidebarLayout(
+    sidebarPanel(
+      numericInput("numericA", "What is the starting concentration in ng/uL?", 
+                   value = 0, min = 1, max = 1000, step = 1),
+      numericInput("numericB", "What is the starting volume in uL?",
+                     value = 0, min = 1, max = 10000, step = 1),
+      numericInput("numericC", "What is the desired concentration in ng/uL?",
+                    value = 0, min = 1, max = 1000, step = 1),
+      submitButton("Submit")
+    ),
+    
+    mainPanel(
+       h3("Volume of diluent to be added to starting DNA solution 
+          in order to achieve desired dilution:"),
+       textOutput("calcA"),
+       h3("Total volume of completed dilution:"),
+       textOutput("calcB")
+    )
+  )
+))
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+```
+
+
+--- .class #id
+
+## Slide 3
+
+Here is the server.R code from my app!
+```{r eval=FALSE}
+
+library(shiny)
+
+
+shinyServer(function(input, output) {
+   calcA <- reactive({
+    ((input$numericA * input$numericB)/input$numericC)-input$numericB
+   })
+   calcB <- reactive({
+     ((input$numericA * input$numericB)/input$numericC)
+   })
+   output$calcA <- calcA
+   output$calcB <- calcB
+  })
+
+```
+
+--- .class #id
+
+## Slide 4
+
+If you ever need to calculate DNA Dilutions then YOU NEED THIS APP!
+
+
+--- .class #id
+
+## Slide 5
+
+If you are working with DNA then you need to calculate DNA Dilutions so YOU NEED THIS APP!
+
+--- .class #id
+
+
+
+
+
+
